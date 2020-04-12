@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+
+	<!-- 实体接口映射文件 -->
+	<mappers>
+		 <mapper resource="com/fs/mapper/xml/LoginMapper.xml" />
+		<!--<mapper resource="com/fs/mapper/xml/AuditMapper.xml" />
+		<mapper resource="com/fs/mapper/xml/DepartmentMapper.xml" />
+		<mapper resource="com/fs/mapper/xml/FinancialMapper.xml" />
+		<mapper resource="com/fs/mapper/xml/FunctionMapper.xml" />
+		<mapper resource="com/fs/mapper/xml/OrderMapper.xml" />
+		<mapper resource="com/fs/mapper/xml/Q_ProductMapper.xml" />
+		<mapper resource="com/fs/mapper/xml/RoleMapper.xml" />
+		<mapper resource="com/fs/mapper/xml/SupplierMapper.xml" />
+		<mapper resource="com/fs/mapper/xml/CustomerMapper.xml" />
+		<mapper resource="com/fs/mapper/xml/ProductMapper.xml" />
+		<mapper resource="com/fs/mapper/xml/LogMapper.xml" /> -->
+	</mappers>
+	
+	
+
+		
+
+
+</configuration>
+
+
+    

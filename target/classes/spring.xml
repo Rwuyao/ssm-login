@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+    <!-- 导入 -->       
+    <import resource="spring-dao.xml"/>
+
+
+	
+	<!-- mybatis-->
+<!-- mybatis的SqlSession的工厂 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+	
+	<!-- mybatis扫描器 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.fs.mapper"></property>
+<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	<!-- 注册事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 开启事务注解驱动 -->
+     <tx:annotation-driven transaction-manager="transactionManager" />
+	 
+<!--注解形式走这个配置  -->
+<!-- 开启切面的注解实现 ，注解或者配置都要有这个-->
+     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+     
+     
+     
+       <!-- 包路径扫描 -->
+    <context:component-scan base-package="com.fs"/>
+    
+    <!-- <aop:config>
+           		<aop:aspect id="asp" ref="aspetbean">
+           			<aop:pointcut id="mycut" expression="execution(* com.fs.controller.DepartmentController.departmentListPage(..))" />
+           		<aop:after-returning pointcut-ref="mycut" method="logDepartmentList"/>
+           			</aop:aspect>
+           </aop:config>   -->
+
+    <!-- Spring线程池 -->
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!-- 核心线程数 -->
+        <property name="corePoolSize" value="5" />
+        <!-- 线程池维护线程的最大数量 -->
+        <property name="maxPoolSize" value="10" />
+        <!-- 允许的空闲时间, 默认60秒 -->
+        <property name="keepAliveSeconds" value="60" />
+        <!-- 任务队列 -->
+        <property name="queueCapacity" value="50" />
+        <!-- 线程超过空闲时间限制，均会退出直到线程数量为0 -->
+        <property name="allowCoreThreadTimeOut" value="true"/>
+        <!-- 对拒绝task的处理策略 -->
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy" />
+        </property>
+    </bean>
+    
+    
+    
+   <!--  <bean id="AllBean" class="com.fs.utils.AllBean" > 
+    
+    </bean>-->
+    
+   
+
+     
+     
+
+	</beans>

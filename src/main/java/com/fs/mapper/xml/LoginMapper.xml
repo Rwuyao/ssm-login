@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fs.mapper.LoginMapper">
+
+<select id="queryUserByUsername" resultType="com.fs.model.User">
+select username,password from user where username=#{username}
+</select>
+
+<select id="queryALLinfo" resultType="com.fs.model.Info">
+
+select * from info
+<where>
+<if test="aa!=null and aa!=''">
+num like #{aa}
+</if>
+</where>
+
+ limit #{pa.start},#{pa.size}
+
+</select>
+<select id="querynum" resultType="int">
+select count(*) from info
+<where>
+<if test="aa!=null and aa!=''">
+num like #{aa}
+</if>
+</where>
+</select>
+<select id="queryallandload" resultType="com.fs.model.Info">
+select * from info
+<where>
+<if test="aa!=null and aa!=''">
+num like #{aa}
+</if>
+
+</where>
+
+</select>
+
+
+<insert id="pinsertdata" >
+
+insert into info(num,name) values
+
+<foreach collection="list" item="item" index="index" separator=",">
+(#{item.num},#{item.name})
+</foreach>
+
+</insert>
+<delete id="deleteById" >
+delete from info where id in
+<foreach collection="list"  item="item" open="(" separator="," close=")"  >
+#{item}
+</foreach>
+
+</delete>
+
+
+</mapper>
